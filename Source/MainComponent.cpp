@@ -8,6 +8,18 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
+class Visualiser : public AudioVisualiserComponent
+{
+public:
+    Visualiser() : AudioVisualiserComponent (2)
+    {
+        setBufferSize(128);
+        setSamplesPerBlock(16);
+        setColours(Colours::black, Colours::indianred);
+    }
+};
+
+
 //==============================================================================
 /*
     This component lives inside our window, and this is where you should put all
@@ -50,7 +62,7 @@ public:
     //==============================================================================
     MainContentComponent()
     {
-        setSize (800, 100);
+        setSize (800, 400);
     
         freqSlider.setSliderStyle(Slider::SliderStyle::LinearHorizontal);
         freqSlider.setRange(50.0, 5000.0);
@@ -68,6 +80,8 @@ public:
         addAndMakeVisible(ampSlider);
         ampLabel.setText("Amplitude", dontSendNotification);
         ampLabel.attachToComponent(&ampSlider, true);
+        
+        addAndMakeVisible(visualiser);
     
         // specify the number of input and output channels that we want to open
         setAudioChannels (2, 2);
@@ -93,6 +107,8 @@ public:
         {
             waveTable.insert(i, sin(2.0 * double_Pi * i / wtSize));
         }
+        
+        visualiser.clear();
     }
 
     void getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill) override
@@ -108,6 +124,8 @@ public:
             rightSpeaker[sample] = waveTable[(int)phase] * amplitude;
             updateFrequency(bufferSize);
         }
+        
+        visualiser.pushBuffer(bufferToFill);
     }
 
     void releaseResources() override
@@ -132,6 +150,8 @@ public:
         const int labelSpace = 100;
         freqSlider.setBounds(labelSpace, 20, getWidth() - 100, 20);
         ampSlider.setBounds(labelSpace, 50, getWidth() - 100, 50);
+        
+        visualiser.setBounds(labelSpace, 110, getWidth() - 200, 200);
     }
 
 
@@ -147,6 +167,8 @@ private:
     double amplitude;
     double currentSampleRate;
     double bufferSize;
+    
+    Visualiser visualiser;
     
     //==============================================================================
 

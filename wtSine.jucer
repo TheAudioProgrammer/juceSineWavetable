@@ -3,7 +3,7 @@
 <JUCERPROJECT id="hW1dbD" name="wtSine" displaySplashScreen="1" reportAppUsage="1"
               splashScreenColour="Dark" projectType="guiapp" version="1.0.0"
               bundleIdentifier="com.yourcompany.wtSine" includeBinaryInAppConfig="1"
-              cppLanguageStandard="11" jucerVersion="5.4.1" companyCopyright="">
+              cppLanguageStandard="11" jucerVersion="5.4.3" companyCopyright="">
   <MAINGROUP id="MQPWRw" name="wtSine">
     <GROUP id="{EDC26979-E21C-B4CF-83E9-8B82EF5161DE}" name="Source">
       <FILE id="ePJwJP" name="MainComponent.cpp" compile="1" resource="0"
